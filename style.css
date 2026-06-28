@@ -1583,3 +1583,152 @@ button:disabled {
     line-height: 1.34;
   }
 }
+
+/* Mobile performance mode: keep the premium look, make phones do less expensive work. */
+@media (max-width: 640px), (hover: none), (pointer: coarse) {
+  .screen {
+    filter: none;
+    transition: opacity var(--smooth), transform var(--smooth);
+  }
+
+  .screen.is-active {
+    filter: none;
+  }
+
+  .aurora-layer {
+    opacity: 0.24;
+    filter: blur(22px);
+    animation-duration: 28s;
+  }
+
+  .ambient-orbit {
+    opacity: 0.42;
+    filter: blur(10px);
+    animation-duration: 18s;
+  }
+
+  .glass-card,
+  .mission-report,
+  .music-toggle,
+  .secret-heart,
+  .skip-intro,
+  .mini-nav-button {
+    backdrop-filter: blur(10px) saturate(116%);
+  }
+
+  .primary-button,
+  .chapter-button,
+  .music-toggle,
+  .mini-nav-button,
+  .nav-dot,
+  .compliment-card,
+  .noticed-card,
+  .generator-panel,
+  .booster-panel,
+  .final-report {
+    transition: transform var(--fast), opacity var(--fast), background var(--fast), border-color var(--fast);
+  }
+
+  .primary-button:hover,
+  .chapter-button:hover,
+  .compliment-card:hover,
+  .noticed-card:hover {
+    filter: none;
+    transform: none;
+  }
+
+  .terminal-card.is-glitching .terminal-log,
+  .progress-bar,
+  .mission-deck.is-scene-shifting .mission-nav,
+  .nav-dot.is-active,
+  .compliment-card:hover,
+  .noticed-card:hover {
+    box-shadow: none;
+  }
+
+  .floating-glyph {
+    text-shadow: 0 0 12px rgba(255, 79, 163, 0.34), 0 0 18px rgba(56, 168, 255, 0.2);
+  }
+
+  .name-particle {
+    box-shadow: 0 0 10px var(--particle-color);
+  }
+
+  .reveal-stage.is-arriving #friendName {
+    animation: nameArrivalMobile 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .chapter.is-active.scene-forward,
+  .chapter.is-active.scene-back {
+    animation: sceneInMobile 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .final-chapter::after {
+    filter: blur(18px);
+    opacity: 0.42;
+  }
+
+  .final-report {
+    animation: none;
+    box-shadow: 0 16px 36px rgba(34, 8, 39, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  }
+
+  .final-report::after {
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    content: "";
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: inherit;
+    opacity: 0.48;
+    animation: finalMobileOutline 4.8s ease-in-out infinite;
+  }
+
+  .secret-note.is-visible {
+    animation: secretNoteUnlock 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .cursor-glow,
+  .cursor-spark {
+    display: none !important;
+  }
+}
+
+@keyframes nameArrivalMobile {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sceneInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes finalMobileOutline {
+  0%, 100% {
+    opacity: 0.38;
+  }
+
+  50% {
+    opacity: 0.78;
+  }
+}

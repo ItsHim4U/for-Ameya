@@ -1,4 +1,4 @@
-﻿const FRIEND_NAME = "Ameya"; // Change this one line if you want to personalize the site again.
+const FRIEND_NAME = "Ameya"; // Change this one line if you want to personalize the site again.
 
 // Customize the fake boot sequence here.
 const LOADING_MESSAGES = [
@@ -34,6 +34,7 @@ const SECRET_UNLOCK_CLICKS = 5;
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 const touchQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+const mobilePerformanceQuery = window.matchMedia("(max-width: 640px)");
 
 const loadingScreen = document.querySelector("#loadingScreen");
 const revealScreen = document.querySelector("#revealScreen");
@@ -74,13 +75,22 @@ let bootFinished = false;
 let secretClicks = 0;
 let audioContext;
 let cursorSparkTimer = 0;
+let nameParticleCleanupTimer = 0;
 
 function motionOK() {
   return !reducedMotionQuery.matches;
 }
 
+function isMobilePerformanceMode() {
+  return mobilePerformanceQuery.matches || touchQuery.matches;
+}
+
 function canUseDesktopEffects() {
-  return motionOK() && finePointerQuery.matches && !touchQuery.matches;
+  return motionOK() && !isMobilePerformanceMode() && finePointerQuery.matches;
+}
+
+function syncPerformanceModeClass() {
+  document.documentElement.classList.toggle("mobile-performance", isMobilePerformanceMode());
 }
 
 function sleep(ms) {
@@ -302,7 +312,7 @@ function createFloatingGlyphs() {
   }
 
   const glyphs = ["\u2661", "\u2726", "\u2606", "\u00B7", "\u2665"];
-  const amount = window.matchMedia("(max-width: 640px)").matches ? 18 : 38;
+  const amount = isMobilePerformanceMode() ? 10 : 38;
   const fragment = document.createDocumentFragment();
 
   for (let index = 0; index < amount; index += 1) {
@@ -323,6 +333,7 @@ function createFloatingGlyphs() {
 }
 
 function createNameParticles() {
+  window.clearTimeout(nameParticleCleanupTimer);
   nameParticleLayer.replaceChildren();
 
   if (!motionOK()) {
@@ -330,7 +341,7 @@ function createNameParticles() {
   }
 
   const colors = ["#ff9ccc", "#ff4fa3", "#93d8ff", "#ffffff", "#ffe69c"];
-  const particleCount = finePointerQuery.matches ? 82 : 42;
+  const particleCount = isMobilePerformanceMode() ? 24 : finePointerQuery.matches ? 82 : 42;
   const fragment = document.createDocumentFragment();
 
   for (let index = 0; index < particleCount; index += 1) {
@@ -347,6 +358,11 @@ function createNameParticles() {
   }
 
   nameParticleLayer.appendChild(fragment);
+
+  window.clearTimeout(nameParticleCleanupTimer);
+  nameParticleCleanupTimer = window.setTimeout(() => {
+    nameParticleLayer.replaceChildren();
+  }, isMobilePerformanceMode() ? 1700 : 2300);
 }
 
 function resizeConfettiCanvas() {
@@ -364,7 +380,8 @@ function launchConfetti({ duration = 1200, intensity = 110 } = {}) {
   }
 
   const colors = ["#ff4fa3", "#ff9ccc", "#38a8ff", "#93d8ff", "#ffffff", "#ffe69c"];
-  const pieces = Array.from({ length: intensity }, () => ({
+  const effectiveIntensity = Math.max(12, Math.round(intensity * (isMobilePerformanceMode() ? 0.5 : 1)));
+  const pieces = Array.from({ length: effectiveIntensity }, () => ({
     x: Math.random() * window.innerWidth,
     y: -20 - Math.random() * window.innerHeight * 0.25,
     size: 5 + Math.random() * 8,
@@ -470,7 +487,7 @@ function unlockSecretNote() {
   secretNote.classList.remove("is-visible");
   void secretNote.offsetWidth;
   requestAnimationFrame(() => secretNote.classList.add("is-visible"));
-  launchConfetti({ duration: 760, intensity: touchQuery.matches ? 28 : 46 });
+  launchConfetti({ duration: 760, intensity: isMobilePerformanceMode() ? 28 : 46 });
   playSoftChime();
 }
 
@@ -581,10 +598,12 @@ nextButtons.forEach((button) => {
 
 window.addEventListener("resize", resizeConfettiCanvas);
 
+syncPerformanceModeClass();
+mobilePerformanceQuery.addEventListener?.("change", syncPerformanceModeClass);
+touchQuery.addEventListener?.("change", syncPerformanceModeClass);
 resizeConfettiCanvas();
 createFloatingGlyphs();
 initCursorTrail();
 initTiltCards();
 updateChapterControls();
 runBootSequence();
-
