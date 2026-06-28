@@ -557,7 +557,7 @@ function initTiltCards() {
   }
 
   const tiltTargets = Array.from(
-    document.querySelectorAll(".terminal-card, .reveal-stage, .generator-panel, .booster-panel, .final-report")
+    document.querySelectorAll(".terminal-card, .reveal-stage, .honest-panel, .generator-panel, .booster-panel, .final-report")
   );
 
   tiltTargets.forEach((card) => {
