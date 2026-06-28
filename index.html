@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operation Smile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+    <div id="cinematicWipe" class="cinematic-wipe" aria-hidden="true"></div>
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora-layer aurora-one"></span>
+      <span class="aurora-layer aurora-two"></span>
+      <span class="aurora-layer aurora-three"></span>
+    </div>
+    <div class="ambient-orbit ambient-orbit-one" aria-hidden="true"></div>
+    <div class="ambient-orbit ambient-orbit-two" aria-hidden="true"></div>
+    <div class="ambient-orbit ambient-orbit-three" aria-hidden="true"></div>
+    <div id="floatLayer" class="float-layer" aria-hidden="true"></div>
+
+    <button id="musicToggle" class="music-toggle" type="button" aria-label="Play a soft chime">
+      <span class="music-icon">&#9834;</span>
+      <span class="music-label">Sound</span>
+    </button>
+    <button id="secretHeart" class="secret-heart" type="button" aria-label="Open secret heart file">&#9825;</button>
+    <div id="secretNote" class="secret-note glass-card" hidden>
+      Secret file found: someone thought your smile was worth spending hours coding for.
+    </div>
+
+    <main class="experience-shell">
+      <section id="loadingScreen" class="screen loading-screen is-active" aria-live="polite">
+        <div class="scanline" aria-hidden="true"></div>
+        <button id="skipIntro" class="skip-intro" type="button">Skip Intro</button>
+        <div class="terminal-card glass-card tilt-card">
+          <div class="terminal-topbar" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p class="eyebrow">Operation Smile</p>
+          <h1>Initializing Smile Protocol</h1>
+          <div id="terminalLog" class="terminal-log"></div>
+          <div class="progress-wrap" aria-label="Loading progress">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <div id="missionReport" class="mission-report" hidden>
+            <p class="report-label">MISSION REPORT</p>
+            <p><span>Status:</span> SUCCESS &#9989;</p>
+            <p><span>Objective:</span> Found.</p>
+            <p><span>Mission:</span> Remind her how special she is.</p>
+            <p><span>Result:</span> The perfect candidate has been identified.</p>
+            <p class="preparing">Preparing the surprise...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="revealScreen" class="screen reveal-screen" aria-labelledby="revealTitle">
+        <div class="reveal-stage glass-card tilt-card">
+          <div id="nameParticleLayer" class="name-particle-layer" aria-hidden="true"></div>
+          <p class="eyebrow">Classified Happiness Transmission</p>
+          <h2 id="revealTitle">Hi, <span id="friendName">Ameya</span>.</h2>
+          <p id="typewriterText" class="typewriter" aria-live="polite"></p>
+          <p class="glow-line"><span>To remind you that you&rsquo;re appreciated.</span></p>
+          <button id="beginMission" class="primary-button" type="button">
+            Begin Mission <span aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="missionDeck" class="mission-deck" aria-label="Mission chapters">
+        <nav class="mission-nav glass-card" aria-label="Mission progress">
+          <span class="mission-code">OP-SMILE</span>
+          <div class="nav-dots" aria-hidden="true">
+            <span class="nav-dot is-active"></span>
+            <span class="nav-dot"></span>
+            <span class="nav-dot"></span>
+            <span class="nav-dot"></span>
+            <span class="nav-dot"></span>
+          </div>
+          <span id="chapterCounter" class="chapter-counter">01 / 05</span>
+          <div class="nav-actions">
+            <button id="chapterBack" class="mini-nav-button" type="button">Back</button>
+          </div>
+        </nav>
+
+        <article id="chapterOne" class="chapter glass-card" data-chapter="0">
+          <div class="chapter-heading">
+            <p class="eyebrow">Chapter 1</p>
+            <h2>Things You Probably Don&rsquo;t Hear Enough</h2>
+          </div>
+          <div class="compliment-grid">
+            <div class="compliment-card tilt-card">You make ordinary moments feel lighter.</div>
+            <div class="compliment-card tilt-card">Your smile has main-character energy.</div>
+            <div class="compliment-card tilt-card">You have this rare way of making people feel comfortable.</div>
+            <div class="compliment-card tilt-card">You are softer, stronger, and more special than you realize.</div>
+            <div class="compliment-card tilt-card">The world is genuinely better with you in it.</div>
+          </div>
+          <button class="chapter-button" type="button" data-next-chapter="1">
+            Continue <span aria-hidden="true">&rarr;</span>
+          </button>
+        </article>
+
+        <article id="chapterTwo" class="chapter glass-card" data-chapter="1">
+          <div class="chapter-heading">
+            <p class="eyebrow">Chapter 2</p>
+            <h2>Things I noticed about you.</h2>
+          </div>
+          <div class="noticed-grid">
+            <div class="noticed-card tilt-card">You notice little shifts in people, even when they try to hide them.</div>
+            <div class="noticed-card tilt-card">You carry kindness quietly, without making it a performance.</div>
+            <div class="noticed-card tilt-card">You have a calm way of making a conversation feel less heavy.</div>
+            <div class="noticed-card tilt-card">You seem to care deeply, even when you pretend it is no big deal.</div>
+          </div>
+          <button class="chapter-button" type="button" data-next-chapter="2">
+            Keep Going <span aria-hidden="true">&rarr;</span>
+          </button>
+        </article>
+
+        <article id="chapterThree" class="chapter glass-card" data-chapter="2">
+          <div class="chapter-heading">
+            <p class="eyebrow">Chapter 3</p>
+            <h2>Smile Generator</h2>
+          </div>
+          <div class="generator-panel tilt-card">
+            <p id="smileReason" class="generated-message">
+              Awaiting one extremely scientific smile reason.
+            </p>
+            <button id="generateSmile" class="primary-button compact" type="button">
+              Generate a Smile Reason
+            </button>
+          </div>
+          <button class="chapter-button" type="button" data-next-chapter="3">
+            Open Next File <span aria-hidden="true">&rarr;</span>
+          </button>
+        </article>
+
+        <article id="chapterFour" class="chapter glass-card" data-chapter="3">
+          <div class="chapter-heading">
+            <p class="eyebrow">Chapter 4</p>
+            <h2>Emergency Mood Booster</h2>
+          </div>
+          <div class="booster-panel tilt-card">
+            <button id="openBooster" class="primary-button compact" type="button">
+              Open if you&rsquo;re sad
+            </button>
+            <p id="boosterMessage" class="booster-message" hidden>
+              Pause. Breathe. You don&rsquo;t have to fix everything today. You&rsquo;re doing better than you think.
+              Also, this website officially declares you precious.
+            </p>
+          </div>
+          <button class="chapter-button" type="button" data-next-chapter="4">
+            Final Report <span aria-hidden="true">&rarr;</span>
+          </button>
+        </article>
+
+        <article id="chapterFive" class="chapter final-chapter glass-card" data-chapter="4">
+          <div class="chapter-heading">
+            <p class="eyebrow">Chapter 5</p>
+            <h2>Final Mission Report</h2>
+          </div>
+          <div class="final-report tilt-card">
+            <p class="final-stamp">MISSION COMPLETE</p>
+            <p><span>Objective:</span> Make her smile.</p>
+            <p><span>Status:</span> Smile detected. Mission successful.</p>
+            <p>
+              <span>Final Note:</span>
+              Out of billions of people, this little corner of the internet was made for you. Not because
+              it had to be perfect, and not because a normal message would not work, but because some people
+              deserve effort that feels a little ridiculous in the best way.
+            </p>
+            <p>
+              If today has been heavy, let this be one tiny reminder that you are noticed, appreciated,
+              and worth the effort.
+            </p>
+            <p class="ps-note">P.S. Come back here whenever you need a small reason to smile.</p>
+            <button id="replayMission" class="primary-button compact" type="button">Replay Mission</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
