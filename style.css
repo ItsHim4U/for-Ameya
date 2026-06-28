@@ -524,21 +524,24 @@ button:disabled {
   position: absolute;
   inset: clamp(1rem, 3.4vw, 2.4rem);
   z-index: 2;
-  display: grid;
-  align-content: center;
-  gap: 0.92rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(0.65rem, 2vw, 0.95rem);
   max-height: calc(100% - 2rem);
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.15rem, 3vw, 2rem);
   overflow: auto;
   opacity: 0;
+  text-align: left;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: var(--radius);
   background:
     radial-gradient(circle at top left, rgba(255, 79, 163, 0.3), transparent 20rem),
     radial-gradient(circle at bottom right, rgba(56, 168, 255, 0.28), transparent 20rem),
-    rgba(9, 7, 25, 0.38);
+    rgba(9, 7, 25, 0.44);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 28px 80px rgba(9, 7, 25, 0.24);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(18px);
   transform: translateY(14px) scale(0.98);
   transition: opacity 520ms ease, transform 520ms ease;
 }
@@ -1143,8 +1146,7 @@ button:disabled {
     opacity: 0.34;
   }
 
-  .glass-card,
-  .mission-report {
+  .glass-card {
     backdrop-filter: blur(18px) saturate(130%);
   }
 
@@ -1170,10 +1172,6 @@ button:disabled {
     min-height: 18rem;
   }
 
-  .mission-report {
-    inset: 0.85rem;
-    align-content: start;
-  }
 
   .reveal-stage h2 {
     font-size: clamp(3.2rem, 17vw, 5.7rem);
@@ -1730,5 +1728,44 @@ button:disabled {
 
   50% {
     opacity: 0.78;
+  }
+}
+@media (max-width: 640px) {
+  .mission-report {
+    inset: clamp(0.65rem, 3vw, 1rem);
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.5rem;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    padding: clamp(0.85rem, 4vw, 1.05rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+    background:
+      radial-gradient(circle at top left, rgba(255, 79, 163, 0.24), transparent 14rem),
+      radial-gradient(circle at bottom right, rgba(56, 168, 255, 0.24), transparent 14rem),
+      rgba(12, 8, 32, 0.64);
+    backdrop-filter: blur(8px) saturate(115%);
+  }
+
+  .mission-report::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .mission-report .report-label {
+    font-size: clamp(1.35rem, 8vw, 2.05rem);
+    line-height: 1.04;
+    letter-spacing: 0.045em;
+  }
+
+  .mission-report p {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(0.84rem, 3.45vw, 0.94rem);
+    line-height: 1.36;
+  }
+
+  .preparing {
+    padding-top: 0.25rem;
   }
 }

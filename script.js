@@ -27,7 +27,10 @@ const SMILE_REASONS = [
 
 const TYPEWRITER_COPY = "This website exists for one reason.";
 const BOOT_MESSAGE_DELAY = 560;
-const REVEAL_DELAY = 1350;
+const POST_TERMINAL_PAUSE = 1200;
+const MISSION_REPORT_HOLD = 3800;
+const SKIPPED_POST_TERMINAL_PAUSE = 180;
+const SKIPPED_MISSION_REPORT_HOLD = 1200;
 const BLACKOUT_DURATION = 700;
 const SECRET_UNLOCK_CLICKS = 5;
 
@@ -142,7 +145,7 @@ async function runBootSequence() {
     await sleep(motionOK() ? BOOT_MESSAGE_DELAY : 0);
   }
 
-  completeBootSequence();
+  await completeBootSequence();
 }
 
 async function completeBootSequence({ skipped = false } = {}) {
@@ -163,12 +166,20 @@ async function completeBootSequence({ skipped = false } = {}) {
     addTerminalLine("Confirmed.", "is-confirmed");
   }
 
-  await sleep(skipped ? 160 : 420);
+  const terminalPause = skipped ? SKIPPED_POST_TERMINAL_PAUSE : POST_TERMINAL_PAUSE;
+  const reportHold = skipped ? SKIPPED_MISSION_REPORT_HOLD : MISSION_REPORT_HOLD;
+
+  await sleep(terminalPause);
+
   missionReport.hidden = false;
   requestAnimationFrame(() => missionReport.classList.add("is-visible"));
-  launchConfetti({ duration: skipped ? 650 : 1150, intensity: skipped ? 50 : 105 });
 
-  await sleep(skipped ? 520 : REVEAL_DELAY);
+  launchConfetti({
+    duration: skipped ? 650 : 950,
+    intensity: skipped ? 36 : 80
+  });
+
+  await sleep(reportHold);
   await transitionToRevealScreen();
 }
 
